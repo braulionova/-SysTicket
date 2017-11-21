@@ -10,10 +10,11 @@
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     <!-- Bootstrap core CSS -->
-    <link href="bootstrap.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/navbar-top-fixed.css') }}" />
+    
     <!-- Custom styles for this template -->
-    <link href="navbar-top-fixed.css" rel="stylesheet">
+    <link href="" rel="stylesheet">
   </head>
 
   <body>
@@ -44,8 +45,8 @@
 
     <div class="container">
 		<div class="jumbotron">
-	    <h1>Navbar example</h1>
-	    <p class="lead">Sistema de tickets.</p>
+	    <h1>Sistema de tickets.</h1>
+	    <p class="lead"></p>
 	    <a class="btn btn-lg btn-primary" href="../../components/navbar/" role="button">View navbar docs &raquo;</a>
 	    </div>
         {% block body %}{% endblock %}
