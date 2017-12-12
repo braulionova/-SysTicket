@@ -4,7 +4,51 @@
 
     <h3>Crear Usuario: </h3>
 
+    <div id="response">
+        <pre></pre>
+    </div>
 
+    <form id="my-form">
+        <input type="text" id="nombres" name="first-name" placeholder="First Name" />
+        <br/>
+        <input type="text" id="apellidos" name="last-name" placeholder="Last Name" />
+        <br/>
+        <br/>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        (function($){
+            function processForm( e ){
+            $.ajax({
+                type: "POST",
+                url: "http://127.0.0.1:8000/guardar_usuario",
+                // The key needs to match your method's input parameter (case-sensitive).
+                data: JSON.stringify({ "nombres": $("#nombres").val(), "apellidos" : $("#apellidos").val(), "username" : "juanperez"
+                    , "password" : "123"
+                    , "tipoUsuario" : "1"
+                    , "rolId" : "1"
+                    , "estado" : "Activo"
+                    , "fechaRegistro" : "2017-12-11" }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(data){alert("Usuario guardado correctamente.");},
+                failure: function(errMsg) {
+                    alert(errMsg);
+                }
+            });
+            $("#nombres").val("");
+            $("#apellidos").val("");
+
+
+            e.preventDefault();
+        }
+
+        $('#my-form').submit( processForm );
+        })(jQuery);
+
+    </script>
 {% endblock %}
 
 {% block stylesheets %}

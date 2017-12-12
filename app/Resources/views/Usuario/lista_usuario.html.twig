@@ -4,6 +4,34 @@
 
     <h3>Lista de Usuarios: </h3>
 
+    <table id="tableUsuario">
+        <tr>
+            <td>Tabla de Usuario</td>
+        </tr>
+    </table>
+
+    <div id="divData">
+
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(function() {
+                $.ajax({
+                    type: "GET",
+                    url: "http://127.0.0.1:8000/usuario/1",
+                    dataType: 'json',
+                    success: function(data) {
+                        $.each(data, function (index, element) {
+                            alert(element.nombres);
+                        });
+                    }
+                })
+            });
+        });
+
+    </script>
+
 
 {% endblock %}
 
