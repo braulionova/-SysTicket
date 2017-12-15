@@ -62,7 +62,7 @@ class UsuarioController extends Controller
      */
     public function listausuarioAction(Request $request)
     {
-        return $this->render('Usuario/lista_usuario.html.twig');
+        return $this->render('Usuario/get_usuario.html.twig');
     }
 
     /**
@@ -112,9 +112,74 @@ class UsuarioController extends Controller
     public function getUsuario(Request $request, Usuario $user)
     {
         $userJ = json_decode($this->get('serializer')->serialize($user, 'json'), true);
+
         return new JsonResponse($userJ);
 
+    }
+
+    /**
+     * @Route("usuario/lista", name="lista_de_usuarios" )
+     * @Method("GET")
+     * */
+    public function getAllUsuarios() {
+        $categorias = $this->getDoctrine()
+            ->getRepository('TicketBundle:Usuario')
+            ->createQueryBuilder('c')
+            ->select('c')
+            ->getQuery()
+            ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY)
+        ;
+        return new JsonResponse($categorias);
+    }
+
+    /**
+     * @Route("lista_usuarios", name="lista_usuarios")
+     */
+    public function listausuariosAction(Request $request)
+    {
+        return $this->render('Usuario/lista_usuarios.html.twig');
+    }
+
+    /**
+     * @Route("/usuario/all", name="get_usuarios")
+     * @Method("GET")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getUsuarios(Request $request)
+    {
+        $users = $this->getDoctrine()->getRepository(Usuario::class)->findAll();
+        $usersList = json_decode($this->get('serializer')->serialize($users, 'json'), true);
+
+        return new JsonResponse($usersList);
+    }
+
+    /**
+     * @Route("/lista", name="listar_usuario", options={"expose"=true})
+     * @param Request $request
+     * @Method ({"GET"})
+     *
+     */
+    public function listar_usuario (Request $request)
+    {
+        $users = $this->getDoctrine()->getRepository(Usuario::class)->findAll();
+
+        return $this->render('Usuario/users.list.html.twig', array ('users'=>$users));
+    }
+
+    /**
+     * @Route("usuario/{id}/edit", name="edit_usuario", requirements={"id"="\d+"} )
+     * @Method("GET")
+     * @param Request $request
+     * @param Usuario $user
+     * @return JsonResponse
+     * */
+    public function editUsuario(Request $request, Usuario $user)
+    {
+        return $this->render('Usuario/user_edit.html.twig', array("user" => $user));
 
     }
+
+
 
 }

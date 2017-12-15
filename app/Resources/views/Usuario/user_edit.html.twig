@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Editar Usuario</h1>
+
+    <form>
+        <div class="form-group">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" placeholder="ID" value="{{ user.id }}" readonly="true">
+        </div>
+        <div class="form-group">
+            <label for="nombres">Nombres</label>
+            <input type="text" class="form-control" id="nombres" placeholder="Nombres" value="{{ user.nombres }}">
+        </div>
+        <div class="form-group">
+            <label for="apellidos">Apellidos</label>
+            <input type="text" class="form-control" id="apellidos" placeholder="Apellidos" value="{{ user.apellidos }}">
+        </div>
+
+        <button type="button" id="addUser" class="btn btn-primary">Actualizar</button>
+    </form>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    
+    <script type="text/javascript">
+
+
+        function  addUser(user) {
+
+            $.ajax({
+                type: "PUT",
+                data: JSON.stringify(user),
+                url: "http://127.0.0.1:8000/usuario/" + user.id + "/edit",
+                error: function() {
+
+                },
+                success: function (data) {
+                    console.log(data);
+                }
+            });
+
+        }
+
+        $(document).ready(function () {
+
+            $('#addUser').click(function () {
+
+                var id = $('#id').val();
+                var nombres = $('#nombres').val();
+                var apellidos = $('#apellidos').val();
+
+                 alert(id +", "+ nombres +", "+ apellidos);
+
+                addUser({id:id, nombres : nombres, apellidos: apellidos});
+
+            });
+
+
+        });
+    </script>
+
+
+{% endblock %}

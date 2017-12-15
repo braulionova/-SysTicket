@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="table-responsive">
+        <table class="table table-striped" id="tbl">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Usuario</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+        var tableData;
+
+        $.getJSON('http://127.0.0.1:8000/usuario/1', function(data) {
+            //alert('Datos: '+data[1].nombres);	data.length
+           // for (i = 0; i < data.length	; i++){
+                $("#tbl").append(
+                    '<tr>' +
+                    '<td>' + data.id + '</td>' +
+                    '<td>' + data.nombres + '</td>' +
+                    '<td>' + data.apellidos + '</td>' +
+                    '<td>' + data.username + '</td>' +
+                    '<td>' + data.estado + '</td>' +
+                    '<td>' + data.fechaRegistro + '</td>' +
+                    '</tr>'
+                );
+            //}
+        });
+    </script>
+{% endblock %}
